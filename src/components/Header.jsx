@@ -5,10 +5,10 @@ function Header({score}) {
     <div className="flex justify-between items-center px-4 py-2 text-white font-bold">
       <div className="header-logo flex gap-2 items-center">
         <img src="/vite.svg" alt="Logo" />
-        <h3>Rick and Memorty</h3>
+        <h3 className='text-2xl'>Rick and Memorty</h3>
       </div>
       <div className="score-board">
-        <h3>Score: <span>{score}</span></h3>
+        <h3 className='text-3xl'>Score: <span>{score}</span></h3>
       </div>
     </div>
   )
