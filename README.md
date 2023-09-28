@@ -1,6 +1,6 @@
 # Rick and Memorty 
 
-[Demo]()
+[Demo](https://rick-and-memorty.netlify.app/)
 [Repo](https://github.com/heyitslauu/memory-master)
 
 Rick and Morty of Earth C-137 is in shambles due to being pursuited by **Evil Morty !**.
