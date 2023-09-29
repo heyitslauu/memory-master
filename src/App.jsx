@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 // Components
 import StartScreen from "./components/StartScreen"
@@ -15,6 +15,14 @@ function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [clickedCards, setClickedCards] = useState([]);
+  const [hasWinner, setHasWinner] = useState(false);
+
+  useEffect(() => {
+    if (score === 8) {
+      setIsGameOver(true);
+      setHasWinner(true);
+    }
+  }, [score]);
 
   const handleGameStart = () => {
     setIsLoading(!isLoading)
@@ -26,14 +34,16 @@ function App() {
     if (clickedCards.includes(obj.id)) {
       setIsGameOver(true)
     } else {
-      setScore(score + 1);
+      const newScore = score + 1;
+      setScore(newScore);
       setClickedCards([...clickedCards, obj.id]);
     }
   }
 
   const resetGame = () => {
     setScore(0);
-    setIsGameOver(false)
+    setIsGameOver(false);
+    setHasWinner(false)
     setClickedCards([])
   }
 
@@ -68,8 +78,27 @@ function App() {
                 <Card cardCharacters={Characters} cardClick={handleScoreChange}/>
               </div>
               ):
-              <div className="min-w-screen min-h-screen grid place-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
-                <div 
+              (<div className="min-w-screen min-h-screen grid place-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+
+                { hasWinner ? 
+                (<div 
+                  className="modal min-w-[300px] text-white min-h-[200px] rounded-lg py-4 px-4 flex flex-col items-center justify-center" 
+                  style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}
+                >
+                  <div className="text-center">
+                    <h4 className="text-5xl font-medium">Congratulations!</h4>
+                    <h3 className="text-xl font-medium mt-2">You successfully fled Evil Morty!</h3>
+                  </div>
+                  <button 
+                    className="mt-4 py-2 px-2 rounded-md bg-yellow-300 text-black outline-none font-medium"
+                    onClick={resetGame}
+                  >
+                    Restart Game
+                  </button>
+                </div>):
+
+
+                (<div 
                   className="modal min-w-[300px] text-white min-h-[200px] rounded-lg py-4 px-4 flex flex-col items-center justify-center" 
                   style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)'}}
                 >
@@ -83,9 +112,9 @@ function App() {
                   >
                     Restart Game
                   </button>
-                </div>
-                
-              </div>
+                </div>)
+                }
+              </div>)
             }
           </div>
         )
